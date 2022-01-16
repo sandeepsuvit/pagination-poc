@@ -1,0 +1,10 @@
+<div>
+    Page: {{p}}
+    <ul>
+        <li *ngFor="let user of (users$ | async)! | paginate: { itemsPerPage: size, currentPage: p, totalItems: total }">
+            {{user.name}}
+        </li>
+    </ul>
+    <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+
+</div>

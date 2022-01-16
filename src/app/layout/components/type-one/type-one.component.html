@@ -1,0 +1,9 @@
+<ul>
+    <li *ngFor="let user of (pagedContent$ | async)?.content">
+        {{user.name}}
+    </li>
+</ul>
+
+<div *ngIf="totalElements">
+    <pagination [totalItems]="totalElements" [itemsPerPage]="numberOfElements" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+</div>
