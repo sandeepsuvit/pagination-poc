@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { IUser } from 'src/app/user.interface';
 import { PagedResponse } from 'src/app/paged-response.interface';
+import { has, isEmpty } from 'lodash';
 
 @Component({
   selector: 'app-type-two',
@@ -23,7 +24,17 @@ export class TypeTwoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadPage(0);
+    this.route.queryParams.subscribe(params => {
+      if (!isEmpty(params) && has(params, 'page')) {
+        const page = Number(params['page']) - 1;
+        
+        this.loadPage(page);
+      } else {
+        this.loadPage(0);
+      }
+    });
+
+    // this.loadPage(0);
   }
 
   loadPage(page: number) {
@@ -42,7 +53,8 @@ export class TypeTwoComponent implements OnInit {
   }
 
   getPage(page: number) {
-    this.loadPage(page - 1);
+    // this.loadPage(page - 1);
+    this.router.navigate(['/two'], { queryParams: { page } });
   }
 
 }
